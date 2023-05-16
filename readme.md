@@ -1,4 +1,4 @@
-# Laravel Pins
+# PIN generator package
 
 Laravel composer package to generate a unique personal identification number(PIN).
 
@@ -19,7 +19,22 @@ php artisan vendor:publish --provider="Intellicore\Pin\PinServiceProvider" --tag
 ```
 
 # Usage
-Once the package successfully installed into the project and imported the namespace into the class, then the package will generate four digit unique identification number. After each execution non-sequential and non-repeated strong pin will be generated. 
+
+Pin generate example:
+
+```php
+$pin = Pin::generate($pin)
+``` 
+The user can generate pin with different lengths.
+
+```php
+$pin = Pin::generate(6)
+31847
+```
+```php
+$pin = Pin::generate(12)
+617259182461
+```
 
 
 ## Change log

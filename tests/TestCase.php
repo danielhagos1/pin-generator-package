@@ -7,7 +7,7 @@ use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
-    protected function getPinProviders($app)
+    protected function getPackageProviders($app)
     {
         return [
             PinServiceProvider::class,
