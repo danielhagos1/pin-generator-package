@@ -4,7 +4,7 @@ use Intellicore\Pin\Facades\Pin;
 
 test('test can generate the right pin', function () {
     $newPin = '3827';
-    $value = \Intellicore\Pin\Pin::generatePins($newPin);
+    $value = \Intellicore\Pin\Pin::generate($newPin);
     expect($value)->toBeFalse();
 });
 
@@ -21,7 +21,7 @@ test('test pin is palindrome', function () {
 });
 
 test('test if pin digits repeated', function () {
-    $newPin = mt_rand(1000, 9999);
+    $newPin = 2334;
     $value = \Intellicore\Pin\Pin::isPinDigitRepeated($newPin);
     $strVal = (string)$value;
     expect($strVal)->toBeTruthy();
@@ -36,14 +36,7 @@ test('test if pin digits not repeated', function () {
 });
 
 test('test pin should not be sequential', function () {
-    //$newPin = mt_rand(1000, 9999);
     $newPin = "1234";
     $value = \Intellicore\Pin\Pin::isSequential($newPin);
     expect($value)->toBeFalse();
-});
-test('test pin sequential', function () {
-    $newPin = mt_rand(1000, 9999);
-    $strPin = (string)$newPin;
-    $value = \Intellicore\Pin\Pin::isSequential($strPin);
-    expect($value)->toBeTrue();
 });

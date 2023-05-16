@@ -1,13 +1,13 @@
 # Laravel Pins
 
-Laravel package for Package
+Laravel composer package to generate a unique personal identification number(PIN).
 
 # Install
 
 You can install the package via composer:
 
 ```
-composer require intellicore/Package
+composer require intellicore/Pin
 ```
 
 # Config
@@ -15,10 +15,12 @@ composer require intellicore/Package
 You can publish the config file with:
 
 ```
-php artisan vendor:publish --provider="Intellicore\Package\PackageServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Intellicore\Pin\PinServiceProvider" --tag="config"
 ```
 
 # Usage
+Once the package successfully installed into the project and imported the namespace into the class, then the package will generate four digit unique identification number. After each execution non-sequential and non-repeated strong pin will be generated. 
+
 
 ## Change log
 

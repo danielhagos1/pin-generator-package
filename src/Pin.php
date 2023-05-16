@@ -6,12 +6,12 @@ namespace Intellicore\Pin;
 
 class Pin
 {
-    public static function generatePins(string $pin)
+    public static function generate()
     {
         $pin = mt_rand(1000, 9999);
         $newPin = (string)$pin;
         if (self::isPalindrome($newPin) && self::isSequential($newPin) && self::isPinDigitRepeated($newPin)) {
-            return true;
+            return $newPin;
         } else {
             return false;
         }
@@ -19,12 +19,7 @@ class Pin
 
     public static function isPalindrome(string $pin)
     {
-        $temp = strrev($pin);
-        if ($temp == $pin) {
-            return true;
-        } else {
-            return false;
-        }
+        return strrev($pin) === $pin;
     }
 
     public static function isSequential($pin)

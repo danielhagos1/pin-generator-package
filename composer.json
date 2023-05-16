@@ -8,7 +8,7 @@
             "email": "danielhh2008@gmail.com"
         }
     ],
-    "homepage": "https://github.com/intellicore/pin",
+    "homepage": "https://github.com/danielhagos1/pin-generator-package.git",
     "keywords": ["Laravel"],
     "require": {
         "illuminate/support": "8.x|9.x|10.x"
