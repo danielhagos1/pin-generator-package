@@ -23,17 +23,18 @@ php artisan vendor:publish --provider="Intellicore\Pin\PinServiceProvider" --tag
 Pin generate example:
 
 ```php
-$pin = Pin::generate($pin)
+$pin = Pin::generate()
+3163
 ``` 
 The user can generate pin with different lengths.
 
 ```php
 $pin = Pin::generate(6)
-31847
+318472
 ```
 ```php
 $pin = Pin::generate(12)
-617259182461
+681725927467
 ```
 
 
@@ -41,11 +42,15 @@ $pin = Pin::generate(12)
 
 Please see the [changelog][3] for more information on what has changed recently.
 
-## Contributing
+## Pull Requests
 
 Contributions are welcome and will be fully credited.
 
-Contributions are accepted via Pull Requests on [Github][4].
+- **One pull request per feature** - If you want to do more than one thing, send multiple pull requests.
+
+- **Document any change in behaviour** - Make sure the `readme.md` and any other relevant documentation are kept up-to-date.
+
+Contributions are accepted via Pull Requests on [4].
 
 ## Pull Requests
 
@@ -60,6 +65,6 @@ Contributions are accepted via Pull Requests on [Github][4].
 license. Please see the [license file][6] for more information.
 
 [3]:    changelog.md
-[4]:    https://github.com/intellicore/Package
+[4]:    https://github.com/danielhagos1/pin-generator-package/
 [5]:    http://semver.org/
 [6]:    license.md

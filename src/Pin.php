@@ -1,78 +1,23 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types=0);
 
 namespace Intellicore\Pin;
 
 class Pin
 {
-    public function generate($pin)
+    public function generate($length = 4)
     {
-        switch ($pin) {
-            case 4:
-                $pin    = mt_rand(1000, 9999);
-                $newPin = (string) $pin;
-                if ($this->isPalindrome($newPin) && $this->isSequential($newPin) && $this->isPinDigitRepeated($newPin)) {
-                    $this->generate(4);
-                };
-                break;
-            case 5:
-                $pin    = mt_rand(10000, 99999);
-                $newPin = (string) $pin;
-                if ($this->isPalindrome($newPin) && $this->isSequential($newPin) && $this->isPinDigitRepeated($newPin)) {
-                    $this->generate(5);
-                };
-                break;
-            case 6:
-                $pin    = mt_rand(100000, 999999);
-                $newPin = (string) $pin;
-                if ($this->isPalindrome($newPin) && $this->isSequential($newPin) && $this->isPinDigitRepeated($newPin)) {
-                    $this->generate(6);
-                };
-                break;
-            case 7:
-                $pin    = mt_rand(1000000, 9999999);
-                $newPin = (string) $pin;
-                if ($this->isPalindrome($newPin) && $this->isSequential($newPin) && $this->isPinDigitRepeated($newPin)) {
-                    $this->generate(7);
-                };
-                break;
-            case 8:
-                $pin    = mt_rand(10000000, 99999999);
-                $newPin = (string) $pin;
-                if ($this->isPalindrome($newPin) && $this->isSequential($newPin) && $this->isPinDigitRepeated($newPin)) {
-                    $this->generate(8);
-                };
-                break;
-            case 9:
-                $pin    = mt_rand(100000000, 999999999);
-                $newPin = (string) $pin;
-                if ($this->isPalindrome($newPin) && $this->isSequential($newPin) && $this->isPinDigitRepeated($newPin)) {
-                    $this->generate(9);
-                };
-                break;
-            case 10:
-                $pin    = mt_rand(1000000000, 9999999999);
-                $newPin = (string) $pin;
-                if ($this->isPalindrome($newPin) && $this->isSequential($newPin) && $this->isPinDigitRepeated($newPin)) {
-                    $this->generate(10);
-                };
-                break;
-            case 11:
-                $pin    = mt_rand(10000000000, 99999999999);
-                $newPin = (string) $pin;
-                if ($this->isPalindrome($newPin) && $this->isSequential($newPin) && $this->isPinDigitRepeated($newPin)) {
-                    $this->generate(11);
-                };
-                break;
-            case 12:
-                $pin    = mt_rand(100000000000, 999999999999);
-                $newPin = (string) $pin;
-                if ($this->isPalindrome($newPin) && $this->isSequential($newPin) && $this->isPinDigitRepeated($newPin)) {
-                    $this->generate(12);
-                };
-                break;
-        }
+        $start = str_pad(1, $length, "0");
+        $end   = str_pad(12, $length, "12");
+
+        $pin = mt_rand($start, $end);
+
+        if ($this->isPalindrome($pin) || $this->isSequential($pin) || $this->isPinDigitRepeated($pin)) {
+            $this->generate($pin);
+        };
+
+        return $pin;
     }
 
     public function isPalindrome(string $pin)
