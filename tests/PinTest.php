@@ -9,13 +9,13 @@ test('test can generate the default 4 digit pin', function () {
     expect($actual)->toBe($expectedPinLength);
 });
 test('test can generate different 6 lengths of digits', function () {
-    $value  = Pin::standardPin(6);
+    $value  = Pin::generate(6);
     $pinLength = strlen($value);
     expect($pinLength)->toBe(6);
 });
 
 test('test pin is not palindrome', function () {
-    $pin    = Pin::standardPin();
+    $pin    = Pin::generate();
     $newPin = (string) $pin;
     $value  = Pin::isPalindrome($newPin);
     expect($value)->toBeFalse();

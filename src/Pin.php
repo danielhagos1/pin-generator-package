@@ -9,7 +9,7 @@ class Pin
     public function generate($length = 4)
     {
 
-        $pin = $this->standardPin();
+        $pin = $this->standardPin($length);
 
         if ($this->isPalindrome($pin) || $this->isSequential($pin) || $this->isPinDigitRepeated($pin)) {
             $this->generate($length);
