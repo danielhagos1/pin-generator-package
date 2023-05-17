@@ -3,29 +3,24 @@
 use Intellicore\Pin\Facades\Pin;
 
 test('test can generate the default 4 digit pin', function () {
-    $value  = Pin::standardPin(4);
-    $actual = strlen($value);
-    $expectedPinLength = 4;
-    expect($actual)->toBe($expectedPinLength);
+    $pin = Pin::generate();
+    expect(strlen($pin))->toBe(4);
 });
 test('test can generate different 6 lengths of digits', function () {
-    $value  = Pin::generate(6);
-    $pinLength = strlen($value);
-    expect($pinLength)->toBe(6);
+    $pin = Pin::generate(6);
+    expect(strlen($pin))->toBe(6);
 });
 
 test('test pin is not palindrome', function () {
-    $pin    = Pin::generate();
-    $newPin = (string) $pin;
-    $value  = Pin::isPalindrome($newPin);
+    $pin = Pin::generate();
+    $value = Pin::isPalindrome($pin);
     expect($value)->toBeFalse();
 });
 
 test('test if pin digits repeated', function () {
-    $newPin = '1193';
-    $value  = Pin::isPinDigitRepeated($newPin);
-    $strVal = (string) $value;
-    expect($strVal)->toBeFalsy();
+    $pin = '1193';
+    $value = Pin::isPinDigitRepeated($pin);
+    expect($value)->toBeFalse();
 });
 
 test('test if pin digits not repeated', function () {
@@ -35,7 +30,7 @@ test('test if pin digits not repeated', function () {
 });
 
 test('test pin should not be sequential', function () {
-    $newPin = 1234;
-    $value  = Pin::isSequential($newPin);
-    expect($value)->toBeFalse();
+    $pin = 1234;
+    $value  = Pin::isSequential($pin);
+    expect($value)->toBeFalse();;
 });

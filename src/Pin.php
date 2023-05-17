@@ -8,8 +8,7 @@ class Pin
 {
     public function generate($length = 4)
     {
-
-        $pin = $this->standardPin($length);
+        $pin = $this->makePin($length);
 
         if ($this->isPalindrome($pin) || $this->isSequential($pin) || $this->isPinDigitRepeated($pin)) {
             $this->generate($length);
@@ -18,14 +17,12 @@ class Pin
         return $pin;
     }
 
-    public function standardPin($length = 4)
+    public function makePin($length = 4)
     {
         $start = str_pad(1, $length, "0");
         $end   = str_pad(7, $length, "7");
 
-        $pin = mt_rand((int) $start, (int) $end);
-
-        return $pin;
+        return mt_rand((int) $start, (int) $end);
     }
 
     public function isPalindrome(string $pin)
