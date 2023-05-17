@@ -8,14 +8,22 @@ class Pin
 {
     public function generate($length = 4)
     {
-        $start = str_pad(1, $length, "0");
-        $end   = str_pad(12, $length, "12");
 
-        $pin = mt_rand($start, $end);
+        $pin = $this->standardPin();
 
         if ($this->isPalindrome($pin) || $this->isSequential($pin) || $this->isPinDigitRepeated($pin)) {
             $this->generate($pin);
         };
+
+        return $pin;
+    }
+
+    public function standardPin($length = 4)
+    {
+        $start = str_pad(1, $length, "0");
+        $end   = str_pad(7, $length, "7");
+
+        $pin = mt_rand((int) $start, (int) $end);
 
         return $pin;
     }
@@ -25,7 +33,7 @@ class Pin
         return strrev($pin) === $pin;
     }
 
-    public function isSequential($pin)
+    public function isSequential(string $pin)
     {
         $pinDigits = str_split($pin);
 
@@ -64,12 +72,12 @@ class Pin
             }
 
             if ($part == $previousPart) {
-                return true;
+                return false;
             }
 
             $previousPart = $part;
         }
 
-        return false;
+        return true;
     }
 }
