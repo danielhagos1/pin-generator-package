@@ -50,7 +50,7 @@ Contributions are welcome and will be fully credited.
 
 - **Document any change in behaviour** - Make sure the `readme.md` and any other relevant documentation are kept up-to-date.
 
-Contributions are accepted via Pull Requests on [4].
+Contributions are accepted via Pull Requests on [Github][4].
 
 ## Pull Requests
 
