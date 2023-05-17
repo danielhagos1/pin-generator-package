@@ -12,7 +12,7 @@ class Pin
         $pin = $this->standardPin();
 
         if ($this->isPalindrome($pin) || $this->isSequential($pin) || $this->isPinDigitRepeated($pin)) {
-            $this->generate($pin);
+            $this->generate($length);
         };
 
         return $pin;

@@ -15,7 +15,7 @@ test('test can generate different 6 lengths of digits', function () {
 });
 
 test('test pin is not palindrome', function () {
-    $pin    = mt_rand(1000, 9999);
+    $pin    = Pin::standardPin();
     $newPin = (string) $pin;
     $value  = Pin::isPalindrome($newPin);
     expect($value)->toBeFalse();
