@@ -6,6 +6,10 @@ test('test can generate the default 4 digit pin', function () {
     $pin = Pin::generate();
     expect(strlen($pin))->toBe(4);
 });
+test('test valid pin', function () {
+    $pin = Pin::generate();
+    expect(strlen($pin))->toBe(4);
+});
 test('test can generate different 6 lengths of digits', function () {
     $pin = Pin::generate(6);
     expect(strlen($pin))->toBe(6);

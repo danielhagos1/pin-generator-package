@@ -4,33 +4,38 @@ declare(strict_types=0);
 
 namespace Intellicore\Pin;
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
+
 class Pin
 {
-    public function generate($length = 4)
+    public function generate($length = 4): int
     {
         $pin = $this->makePin($length);
 
         if ($this->isPalindrome($pin) || $this->isSequential($pin) || $this->isPinDigitRepeated($pin)) {
             $this->generate($length);
-        };
+        }
+
+        $this->cachePin($pin);
 
         return $pin;
     }
 
-    public function makePin($length = 4)
+    protected function makePin($length = 4): string
     {
-        $start = str_pad(1, $length, "0");
-        $end   = str_pad(7, $length, "7");
+        $start = str_pad('1', $length, "0");
+        $end   = str_pad('7', $length, "7");
 
         return mt_rand((int) $start, (int) $end);
     }
 
-    public function isPalindrome(string $pin)
+    protected function isPalindrome(string $pin): bool
     {
         return strrev($pin) === $pin;
     }
 
-    public function isSequential(string $pin)
+    protected function isSequential(string $pin): bool
     {
         $pinDigits = str_split($pin);
 
@@ -56,7 +61,7 @@ class Pin
         return true;
     }
 
-    public function isPinDigitRepeated(string $pin)
+    protected function isPinDigitRepeated(string $pin): bool
     {
         $parts = str_split($pin);
 
@@ -76,5 +81,18 @@ class Pin
         }
 
         return true;
+    }
+
+    protected function cachePin(string $pin)
+    {
+        $pins = array($pin);
+        $now = Carbon::now();
+
+        // Check if pin cache exists?
+        if (Cache::has($pins[$pin])) {
+            return "This pin has already been taken";
+        } else {
+            Cache::put('pin', $pins, $now);
+        }
     }
 }
