@@ -3,5 +3,5 @@
 use Intellicore\Pin\Pin;
 
 return [
-    'pin'
+    'length' => 4
 ];

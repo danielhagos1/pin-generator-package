@@ -9,31 +9,44 @@ use Illuminate\Support\Facades\Cache;
 
 class Pin
 {
-    public function validPin($length = 4): bool
+    public function generate(int $length = null): string
     {
-        $pin = $this->makePin($length);
+        $length = $this->getDefaultLength($length);
+        $pin    = $this->makePin($length);
 
-        if ($this->isPalindrome($pin) || !$this->isSequential($pin) || $this->isPinDigitRepeated($pin)) {
-            return true;
+        if (!$this->validPin($pin)) {
+            $this->generate($length);
         }
-
-        return false;
-    }
-
-    public function generate($length = 4): bool
-    {
-        $pin = $this->validPin($length);
-
-        if ($pin) {
-            return $this->generate($length);
+        $values = cache('pins');
+        foreach($values as $val)
+        {
+            if($val === $pin){
+                return false;
+            } else {
+                $this->cachePin($pin);
+            }
         }
-
-        $this->cachePin($pin);
-
         return $pin;
     }
 
-    public function makePin($length = 4): string
+    public function validPin(string $pin): bool
+    {
+        if ($this->isPalindrome($pin)) {
+            return false;
+        }
+
+        if ($this->isSequential($pin)) {
+            return false;
+        }
+
+        if ($this->isPinDigitRepeated($pin)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    protected function makePin($length = 4): string
     {
         $start = str_pad('1', $length, "0");
         $end   = str_pad('7', $length, "7");
@@ -41,12 +54,12 @@ class Pin
         return mt_rand((int) $start, (int) $end);
     }
 
-    public function isPalindrome(string $pin): bool
+    protected function isPalindrome(string $pin): bool
     {
         return strrev($pin) === $pin;
     }
 
-    public function isSequential(string $pin): bool
+    protected function isSequential(string $pin): bool
     {
         $pinDigits = str_split($pin);
 
@@ -72,7 +85,7 @@ class Pin
         return true;
     }
 
-    public function isPinDigitRepeated(string $pin): bool
+    protected function isPinDigitRepeated(string $pin): bool
     {
         $parts = str_split($pin);
 
@@ -85,18 +98,28 @@ class Pin
             }
 
             if ($part == $previousPart) {
-                return false;
+                return true;
             }
 
             $previousPart = $part;
         }
 
-        return true;
+        return false;
     }
 
-    public function cachePin(string $pin): bool
+    public function cachePin(string $pin)
     {
-        //store the pin if not already present
-        return Cache::add('pin', $pin);
+        $data = array();
+        $data[] = $pin;
+        return Cache::put('pins', $data);
+    }
+
+    protected function getDefaultLength($length): string
+    {
+        if ($length === null) {
+            return config('pin.length');
+        }
+
+        return $length;
     }
 }
