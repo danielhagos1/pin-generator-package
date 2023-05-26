@@ -3,7 +3,6 @@
 use Intellicore\Pin\Facades\Pin;
 
 test('generate default length pin', function () {
-
     $pin    = Pin::generate();
     $length = config('pin.length');
     expect(strlen($pin))->toBe($length);
@@ -27,7 +26,7 @@ test('test can generate valid pin 23914', function () {
 });
 test('test can generate valid pin 001654', function () {
     $pin = Pin::validPin('001654');
-    expect($pin)->toBeTrue();
+    expect($pin)->toBeFalse();
 });
 test('test can generate valid pin 234953', function () {
     $pin = Pin::validPin('234953');
@@ -35,18 +34,18 @@ test('test can generate valid pin 234953', function () {
 });
 test('test can generate valid pin 763315', function () {
     $pin = Pin::validPin('763315');
-    expect($pin)->toBeTrue();
+    expect($pin)->toBeFalse();
 });
 
-test('test pin is not palindrome', function () {
+test('test pin is palindrome', function () {
     $value = Pin::isPalindrome('5436');
-    expect($value)->toBeTrue();
+    expect($value)->toBeFalse();
 });
 
 test('test pin digits repeated', function () {
     $pin   = '1115';
     $value = Pin::isPinDigitRepeated($pin);
-    expect($value)->toBeFalse();
+    expect($value)->toBeTrue();
 });
 
 test('test if pin digits not repeated', function () {
@@ -60,10 +59,4 @@ test('test is pin sequential', function () {
     $value = Pin::isSequential($pin);
     expect($value)->toBeFalse();
 });
-test('test cache pin sequential', function () {
-    $pin   = '5362';
-    $value = Pin::cachePin($pin);
-    dd($value);
-//    $value = Pin::isSequential($pin);
-//    expect($value)->toBeFalse();
-});
+

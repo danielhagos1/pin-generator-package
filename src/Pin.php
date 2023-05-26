@@ -9,23 +9,26 @@ use Illuminate\Support\Facades\Cache;
 
 class Pin
 {
+    public array $data = [];
+
     public function generate(int $length = null): string
     {
         $length = $this->getDefaultLength($length);
         $pin    = $this->makePin($length);
 
-        if (!$this->validPin($pin)) {
+        if ($this->validPin($pin)) {
             $this->generate($length);
         }
-        $values = cache('pins');
-        foreach($values as $val)
-        {
-            if($val === $pin){
+
+        $values[] = cache('pins');
+        foreach ($values as $val) {
+            if ($val === $pin) {
                 return false;
             } else {
                 $this->cachePin($pin);
             }
         }
+
         return $pin;
     }
 
@@ -107,19 +110,25 @@ class Pin
         return false;
     }
 
-    public function cachePin(string $pin)
+    public function cachePin(string $pin): mixed
     {
-        $data = array();
-        $data[] = $pin;
-        return Cache::put('pins', $data);
+        $this->data[] = $pin;
+        $values       = Cache::put('pins', $this->data);
+        return cache()->remember('pins', 3, function () use ($values) {
+            return $values;
+        });
     }
 
-    protected function getDefaultLength($length): string
+    protected function getDefaultLength($length)
     {
         if ($length === null) {
             return config('pin.length');
         }
-
         return $length;
+    }
+
+    public function pins(): array
+    {
+        return cache('pins');
     }
 }
