@@ -32,7 +32,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "PinServiceProvider"
+                "PackageServiceProvider"
             ],
             "aliases": {
                 "Pins": "Intellicore\\Pin\\Facades\\Pin"

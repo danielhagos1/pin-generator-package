@@ -9,12 +9,23 @@ use Illuminate\Support\Facades\Cache;
 
 class Pin
 {
-    public function generate($length = 4): int
+    public function validPin($length = 4): bool
     {
         $pin = $this->makePin($length);
 
-        if ($this->isPalindrome($pin) || $this->isSequential($pin) || $this->isPinDigitRepeated($pin)) {
-            $this->generate($length);
+        if ($this->isPalindrome($pin) || !$this->isSequential($pin) || $this->isPinDigitRepeated($pin)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function generate($length = 4): bool
+    {
+        $pin = $this->validPin($length);
+
+        if ($pin) {
+            return $this->generate($length);
         }
 
         $this->cachePin($pin);
@@ -22,7 +33,7 @@ class Pin
         return $pin;
     }
 
-    protected function makePin($length = 4): string
+    public function makePin($length = 4): string
     {
         $start = str_pad('1', $length, "0");
         $end   = str_pad('7', $length, "7");
@@ -30,12 +41,12 @@ class Pin
         return mt_rand((int) $start, (int) $end);
     }
 
-    protected function isPalindrome(string $pin): bool
+    public function isPalindrome(string $pin): bool
     {
         return strrev($pin) === $pin;
     }
 
-    protected function isSequential(string $pin): bool
+    public function isSequential(string $pin): bool
     {
         $pinDigits = str_split($pin);
 
@@ -61,7 +72,7 @@ class Pin
         return true;
     }
 
-    protected function isPinDigitRepeated(string $pin): bool
+    public function isPinDigitRepeated(string $pin): bool
     {
         $parts = str_split($pin);
 
@@ -83,16 +94,9 @@ class Pin
         return true;
     }
 
-    protected function cachePin(string $pin)
+    public function cachePin(string $pin): bool
     {
-        $pins = array($pin);
-        $now = Carbon::now();
-
-        // Check if pin cache exists?
-        if (Cache::has($pins[$pin])) {
-            return "This pin has already been taken";
-        } else {
-            Cache::put('pin', $pins, $now);
-        }
+        //store the pin if not already present
+        return Cache::add('pin', $pin);
     }
 }

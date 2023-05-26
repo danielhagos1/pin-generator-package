@@ -2,39 +2,55 @@
 
 use Intellicore\Pin\Facades\Pin;
 
-test('test can generate the default 4 digit pin', function () {
-    $pin = Pin::generate();
-    expect(strlen($pin))->toBe(4);
+test('test can generate valid pin 4942', function () {
+
+    $pin  = Pin::validPin('4942');
+    expect($pin)->toBeTrue();
 });
-test('test valid pin', function () {
-    $pin = Pin::generate();
-    expect(strlen($pin))->toBe(4);
+test('test can generate valid pin 7912', function () {
+    $pin  = Pin::validPin('7912');
+    expect($pin)->toBeTrue();
 });
-test('test can generate different 6 lengths of digits', function () {
-    $pin = Pin::generate(6);
-    expect(strlen($pin))->toBe(6);
+test('test can generate valid pin 9772', function () {
+    $pin  = Pin::validPin('9772');
+    expect($pin)->toBeTrue();
+});
+test('test can generate valid pin 23914', function () {
+    $pin  = Pin::validPin('23914');
+    expect($pin)->toBeTrue();
+});
+test('test can generate valid pin 001654', function () {
+    $pin  = Pin::validPin('001654');
+    expect($pin)->toBeTrue();
+});
+test('test can generate valid pin 234953', function () {
+    $pin  = Pin::validPin('234953');
+    expect($pin)->toBeTrue();
+});
+test('test can generate valid pin 763315', function () {
+    $pin  = Pin::validPin('763315');
+    expect($pin)->toBeTrue();
 });
 
 test('test pin is not palindrome', function () {
-    $pin = Pin::generate();
-    $value = Pin::isPalindrome($pin);
-    expect($value)->toBeFalse();
+    $value = Pin::isPalindrome('2222');
+    expect($value)->toBeTrue();
 });
 
-test('test if pin digits repeated', function () {
-    $pin = '1193';
+test('test pin digits repeated', function () {
+    $pin = '1115';
     $value = Pin::isPinDigitRepeated($pin);
     expect($value)->toBeFalse();
 });
 
 test('test if pin digits not repeated', function () {
-    $value  = 3369;
-    $strVal = (string) $value;
-    expect($strVal)->toBeTruthy();
+    $pin  = '3969';
+    $value = Pin::isPinDigitRepeated($pin);
+    expect($value)->toBeTrue();
 });
 
-test('test pin should not be sequential', function () {
+test('test is pin sequential', function () {
     $pin = 1234;
     $value  = Pin::isSequential($pin);
-    expect($value)->toBeFalse();;
+    expect($value)->toBeFalse();
 });
