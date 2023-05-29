@@ -8,12 +8,12 @@ test('generate default length pin', function () {
     expect(strlen($pin))->toBe($length);
 });
 
-test('test can generate valid pin 4942', function () {
+test('can generate valid pin 4942', function () {
     $pin = Pin::validPin('4942');
     expect($pin)->toBeTrue();
 });
 
-test('test can generate valid pin 7912', function () {
+test('can generate valid pin 7912', function () {
     $pin = Pin::validPin('7912');
     expect($pin)->toBeTrue();
 });
