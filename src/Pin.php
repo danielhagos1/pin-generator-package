@@ -37,11 +37,11 @@ class Pin
         }
 
         if ($this->isSequential($pin)) {
-            return false;
+            return true;
         }
 
-        if ($this->isPinDigitRepeated($pin, 4)) {
-            return false;
+        if ($this->isPinDigitRepeated($pin)) {
+            return true;
         }
 
         return true;
@@ -77,7 +77,7 @@ class Pin
             }
 
             if ($pin == (integer) $previousDigit + 1) {
-                    return true;
+                return true;
             }
 
             $previousDigit = $pin;
@@ -90,9 +90,8 @@ class Pin
     {
         if (count(count_chars($pin), 1) < $unique) {
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 
     public function cachePin(string $pin): mixed

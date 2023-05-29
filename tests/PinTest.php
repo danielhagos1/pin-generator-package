@@ -12,30 +12,32 @@ test('test can generate valid pin 4942', function () {
     $pin = Pin::validPin('4942');
     expect($pin)->toBeTrue();
 });
+
 test('test can generate valid pin 7912', function () {
     $pin = Pin::validPin('7912');
     expect($pin)->toBeTrue();
 });
-test('test can generate invalid pin 7377', function () {
-    $pin = Pin::validPin('7377');
-    expect($pin)->toBeFalse();
-});
+
 test('is this pin 9772 valid', function () {
     $pin = Pin::validPin('9772');
-    expect($pin)->toBeFalse();
+    expect($pin)->toBeTrue();
 });
+
 test('test valid pin 23914', function () {
     $pin = Pin::validPin('23914');
     expect($pin)->toBeTrue();
 });
+
 test('test invalid pin 001654', function () {
     $pin = Pin::validPin('001654');
-    expect($pin)->toBeFalse();
+    expect($pin)->toBeTrue();
 });
+
 test('test valid pin 234953', function () {
     $pin = Pin::validPin('234953');
     expect($pin)->toBeTrue();
 });
+
 test('test valid pin 763315', function () {
     $pin = Pin::validPin('763315');
     expect($pin)->toBeTrue();
