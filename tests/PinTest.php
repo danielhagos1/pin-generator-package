@@ -28,7 +28,7 @@ test('test valid pin 23914', function () {
     expect($pin)->toBeTrue();
 });
 
-test('test invalid pin 001654', function () {
+test('test valid pin 001654', function () {
     $pin = Pin::validPin('001654');
     expect($pin)->toBeTrue();
 });
