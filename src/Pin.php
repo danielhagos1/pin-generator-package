@@ -20,11 +20,9 @@ class Pin
             $this->generate($length);
         }
 
-        $values[] = cache('pins');
+        $values[] = $this->pins();
         foreach ($values as $val) {
-            if ($val === $pin) {
-                return false;
-            } else {
+            if ($val !== $pin) {
                 $this->cachePin($pin);
             }
         }
@@ -49,7 +47,7 @@ class Pin
         return true;
     }
 
-    protected function makePin($length = 4): string
+    public function makePin($length = 4): string
     {
         $start = str_pad('1', $length, "0");
         $end   = str_pad('7', $length, "7");
@@ -57,12 +55,12 @@ class Pin
         return mt_rand((int) $start, (int) $end);
     }
 
-    protected function isPalindrome(string $pin): bool
+    public function isPalindrome(string $pin): bool
     {
         return strrev($pin) === $pin;
     }
 
-    protected function isSequential(string $pin): bool
+    public function isSequential(string $pin): bool
     {
         $pinDigits = str_split($pin);
 
@@ -88,7 +86,7 @@ class Pin
         return true;
     }
 
-    protected function isPinDigitRepeated(string $pin): bool
+    public function isPinDigitRepeated(string $pin): bool
     {
         $parts = str_split($pin);
 
@@ -113,7 +111,7 @@ class Pin
     public function cachePin(string $pin): mixed
     {
         $this->data[] = $pin;
-        $values       = Cache::put('pins', $this->data);
+        $values = Cache::forever("pins", $this->data);
         return cache()->remember('pins', 3, function () use ($values) {
             return $values;
         });
@@ -129,6 +127,6 @@ class Pin
 
     public function pins(): array
     {
-        return cache('pins');
+        return $this->data;
     }
 }
