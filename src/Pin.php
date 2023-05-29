@@ -40,7 +40,7 @@ class Pin
             return false;
         }
 
-        if ($this->isPinDigitRepeated($pin)) {
+        if ($this->isPinDigitRepeated($pin, 4)) {
             return false;
         }
 
@@ -77,7 +77,7 @@ class Pin
             }
 
             if ($pin == (integer) $previousDigit + 1) {
-                return false;
+                    return true;
             }
 
             $previousDigit = $pin;
@@ -86,32 +86,19 @@ class Pin
         return true;
     }
 
-    public function isPinDigitRepeated(string $pin): bool
+    public function isPinDigitRepeated(string $pin, $unique = 3): bool
     {
-        $parts = str_split($pin);
-
-        $previousPart = null;
-
-        foreach ($parts as $part) {
-            if (!$previousPart) {
-                $previousPart = $part;
-                continue;
-            }
-
-            if ($part == $previousPart) {
-                return true;
-            }
-
-            $previousPart = $part;
+        if (count(count_chars($pin), 1) < $unique) {
+            return false;
+        } else {
+            return true;
         }
-
-        return false;
     }
 
     public function cachePin(string $pin): mixed
     {
         $this->data[] = $pin;
-        $values = Cache::forever("pins", $this->data);
+        $values       = Cache::forever("pins", $this->data);
         return cache()->remember('pins', 3, function () use ($values) {
             return $values;
         });

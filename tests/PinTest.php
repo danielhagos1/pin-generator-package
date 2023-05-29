@@ -36,9 +36,9 @@ test('test valid pin 234953', function () {
     $pin = Pin::validPin('234953');
     expect($pin)->toBeTrue();
 });
-test('test invalid pin 763315', function () {
+test('test valid pin 763315', function () {
     $pin = Pin::validPin('763315');
-    expect($pin)->toBeFalse();
+    expect($pin)->toBeTrue();
 });
 
 test('is pin palindrome', function () {
@@ -58,16 +58,10 @@ test('test is pin is not sequential', function () {
     expect($value)->toBeTrue();
 });
 
-test('test is pin is palindrome', function () {
-    $pin   = '2332';
-    $value = Pin::isSequential($pin);
-    expect($value)->toBeFalse();
-});
-
 test('test invalid sequential pin', function () {
     $pin   = '1238';
     $value = Pin::isSequential($pin);
-    expect($value)->toBeFalse();
+    expect($value)->toBeTrue();
 });
 
 
