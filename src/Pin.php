@@ -32,19 +32,11 @@ class Pin
 
     public function validPin(string $pin): bool
     {
-        if ($this->isPalindrome($pin)) {
+        if ($this->isPalindrome($pin) || !$this->isSequential($pin) || $this->isPinDigitRepeated($pin)) {
+            return true;
+        } else {
             return false;
         }
-
-        if ($this->isSequential($pin)) {
-            return true;
-        }
-
-        if ($this->isPinDigitRepeated($pin)) {
-            return true;
-        }
-
-        return true;
     }
 
     public function makePin($length = 4): string
@@ -86,9 +78,9 @@ class Pin
         return true;
     }
 
-    public function isPinDigitRepeated(string $pin, $unique = 3): bool
+    public function isPinDigitRepeated(string $pin, $unique = 3)
     {
-        if (count(count_chars($pin), 1) < $unique) {
+        if (count(count_chars($pin, 1)) < $unique) {
             return false;
         }
         return true;
