@@ -4,7 +4,7 @@ Laravel composer package to generate a unique personal identification number(PIN
 
 # Install
 
-You can install the package via composer:
+Install the package via composer:
 
 ```
 composer require intellicore/Pin
@@ -12,7 +12,7 @@ composer require intellicore/Pin
 
 # Config
 
-You can publish the config file with:
+Publish the config file with:
 
 ```
 php artisan vendor:publish --provider="Intellicore\Pin\PinServiceProvider" --tag="config"
@@ -20,6 +20,7 @@ php artisan vendor:publish --provider="Intellicore\Pin\PinServiceProvider" --tag
 
 # Usage
 
+#### Import the package into the controller
 Pin generate example:
 
 ```php
