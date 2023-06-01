@@ -4,8 +4,8 @@ declare(strict_types=0);
 
 namespace Intellicore\Pin;
 
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Collection;
+use Intellicore\Pin\Models\PinModel;
 
 class Pin
 {
@@ -16,14 +16,16 @@ class Pin
         $length = $this->getDefaultLength($length);
         $pin    = $this->makePin($length);
 
-        if ($this->validPin($pin)) {
+        if (!$this->validPin($pin)) {
             $this->generate($length);
         }
 
-        $values[] = $this->pins();
-        foreach ($values as $val) {
-            if ($val !== $pin) {
-                $this->cachePin($pin);
+        $values = $this->getAllPins();
+        if ($values->isNotEmpty()) {
+            foreach ($values as $val) {
+                if ($val !== $pin) {
+                    $this->savePin($pin);
+                }
             }
         }
 
@@ -32,7 +34,7 @@ class Pin
 
     public function validPin(string $pin): bool
     {
-        if ($this->isPalindrome($pin) || !$this->isSequential($pin) || $this->isPinDigitRepeated($pin)) {
+        if ($this->isPalindrome($pin) || !$this->isSequential($pin) || !$this->isPinDigitRepeated($pin)) {
             return true;
         } else {
             return false;
@@ -52,47 +54,45 @@ class Pin
         return strrev($pin) === $pin;
     }
 
-    public function isSequential(string $pin): bool
+    function isSequential($pin, $consecutiveNums = 3): bool
     {
-        $pinDigits = str_split($pin);
-
-        $previousDigit = null;
-
-        foreach ($pinDigits as $pin) {
-            if (!$previousDigit) {
-                $previousDigit = $pin;
-                continue;
+        $con = 1;
+        for ($i = 1; $i < strlen($pin); $i++) {
+            if ($pin[$i] == ($pin[$i - 1] + 1)) {
+                $con++;
+                if ($con >= $consecutiveNums) {
+                    return true;
+                }
+            } else {
+                $con = 1;
             }
-
-            if ($pin == $previousDigit) {
-                return false;
-            }
-
-            if ($pin == (integer) $previousDigit + 1) {
-                return true;
-            }
-
-            $previousDigit = $pin;
         }
-
-        return true;
+        return false;
     }
 
-    public function isPinDigitRepeated(string $pin, $unique = 3)
+    public function isPinDigitRepeated(string $pin, $sameDigit = 3): bool
     {
-        if (count(count_chars($pin, 1)) < $unique) {
-            return false;
+        $sm = 1;
+        for ($i = 0; $i < strlen($pin); $i++) {
+            for ($j = 1; $j < strlen($pin); $j++) {
+                if ($pin[$i] == $pin[$j]) {
+                    $sm++;
+                    if ($sm >= $sameDigit) {
+                        return true;
+                    }
+                } else {
+                    $sm = 1;
+                }
+            }
         }
-        return true;
+        return false;
     }
 
-    public function cachePin(string $pin): mixed
+    public function savePin(string $pin): mixed
     {
-        $this->data[] = $pin;
-        $values       = Cache::forever("pins", $this->data);
-        return cache()->remember('pins', 3, function () use ($values) {
-            return $values;
-        });
+        return PinModel::firstOrCreate([
+            'pin' => $pin
+        ]);
     }
 
     protected function getDefaultLength($length)
@@ -103,8 +103,12 @@ class Pin
         return $length;
     }
 
-    public function pins(): array
+    public function getAllPins()
     {
-        return $this->data;
+        $pins = PinModel::all();
+        if ($pins->isNotEmpty()) {
+            return $pins;
+        }
+        return $pins;
     }
 }

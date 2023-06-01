@@ -13,6 +13,7 @@ class PinServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->configurePublishing();
     }
 
@@ -26,6 +27,12 @@ class PinServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/Pin.php' => config_path('pin.php'),
         ], 'config');
+
+        $timestamp = date('Y_m_d_His', time());
+
+          $this->publishes([
+            __DIR__.'/database/migrations/create_pins_table.php' => $this->app->databasePath()."/migrations/{$timestamp}_create_pins_table.php",
+        ], 'migrations');
     }
 
 
