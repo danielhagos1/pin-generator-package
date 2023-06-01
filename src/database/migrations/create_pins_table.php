@@ -17,7 +17,7 @@ class create_pins_table extends Migration
     {
         Schema::create('pins', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('pin');
+            $table->string('pin');
             $table->timestamps();
         });
     }

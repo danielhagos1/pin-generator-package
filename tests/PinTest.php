@@ -14,7 +14,7 @@ test('generate six digit length pin', function () {
 });
 
 test('can generate valid pin 4942', function () {
-    $pin = Pin::validPin('1234');
+    $pin = Pin::validPin('4942');
     expect($pin)->toBeTrue();
 });
 
@@ -29,7 +29,7 @@ test('can generate valid pin 9772', function () {
 });
 
 test('can generate pin 23914', function () {
-    $pin = Pin::validPin('2222');
+    $pin = Pin::validPin('23914');
     expect($pin)->toBeTrue();
 });
 
@@ -54,13 +54,13 @@ test('test is pin palindrome', function () {
 });
 
 test('test pin digits repeated', function () {
-    $pin   = '7377';
+    $pin   = '1115';
     $value = Pin::isPinDigitRepeated($pin);
     expect($value)->toBeTrue();
 });
 
 test('test pin not sequential', function () {
-    $pin   = '7392';
+    $pin   = '763315';
     $value = Pin::isSequential($pin);
     expect($value)->toBeFalse();
 });
@@ -70,5 +70,11 @@ test('test invalid sequential pin', function () {
     $value = Pin::isSequential($pin);
     expect($value)->toBeTrue();
 });
+
+//test('tes pin is valid', function () {
+//    $pin   = '763315';
+//    $value = Pin::validPin($pin);
+//    expect($value)->toBeTrue();
+//});
 
 
