@@ -4,7 +4,6 @@ declare(strict_types=0);
 
 namespace Intellicore\Pin;
 
-use Illuminate\Support\Facades\DB;
 use Intellicore\Pin\Models\PinModel;
 
 class Pin
@@ -17,9 +16,9 @@ class Pin
         if (!$this->validPin($pin)) {
             $this->generate($length);
         }
-        if(DB::table('pins')->where('pin', $pin)->doesntExist())
-        {
-            $this->savePin($pin);
+
+        if (!PinModel::where('pin', $pin)->count() == 0) {
+            PinModel::create(['pin' => $pin]);
         }
 
         return $pin;
@@ -37,8 +36,8 @@ class Pin
     public function makePin(int $length = null): string
     {
         $length = $this->getDefaultLength($length);
-        $start = str_pad('1', $length, "0");
-        $end   = str_pad('9', $length, "9");
+        $start  = str_pad('1', $length, "0");
+        $end    = str_pad('9', $length, "9");
 
         return mt_rand((int) $start, (int) $end);
     }
@@ -88,13 +87,6 @@ class Pin
             }
         }
         return false;
-    }
-
-    public function savePin(string $pin): mixed
-    {
-        return PinModel::firstOrCreate([
-            'pin' => $pin
-        ]);
     }
 
     protected function getDefaultLength($length)

@@ -70,5 +70,3 @@ test('test invalid sequential pin', function () {
     $value = Pin::isSequential($pin);
     expect($value)->toBeTrue();
 });
-
-

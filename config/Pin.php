@@ -3,5 +3,5 @@
 use Intellicore\Pin\Pin;
 
 return [
-    'length' => 4
+    'length' => env('PIN_LENGTH', 4)
 ];
