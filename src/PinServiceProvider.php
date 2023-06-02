@@ -30,7 +30,7 @@ class PinServiceProvider extends ServiceProvider
 
         $timestamp = date('Y_m_d_His', time());
 
-          $this->publishes([
+           $this->publishes([
             __DIR__.'/database/migrations/create_pins_table.php' => $this->app->databasePath()."/migrations/{$timestamp}_create_pins_table.php",
         ], 'migrations');
     }

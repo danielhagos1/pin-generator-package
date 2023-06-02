@@ -5,6 +5,8 @@ namespace Intellicore\Pin\Tests;
 use Intellicore\Pin\PinServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
+use function Orchestra\Testbench\artisan;
+
 class TestCase extends Orchestra
 {
     protected function getPackageProviders($app)
@@ -26,8 +28,16 @@ class TestCase extends Orchestra
         $app['config']->set('database.default', 'mysql');
         $app['config']->set('database.connections.mysql', [
             'driver'   => 'sqlite',
+            'host'   => '127.0.0.1',
             'database' => ':memory:',
             'prefix'   => '',
         ]);
+    }
+
+    protected function defineDatabaseMigrations()
+    {
+        $this->loadLaravelMigrations();
+
+        $this->loadMigrationsFrom(dirname(__DIR__).'/src/database/migrations');
     }
 }
