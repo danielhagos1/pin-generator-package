@@ -44,7 +44,7 @@ test('test valid pin 234953', function () {
 });
 
 test('test valid pin 763315', function () {
-    $pin = Pin::isPinDigitRepeated('763315');
+    $pin = Pin::validPin('763315');
     expect($pin)->toBeTrue();
 });
 
