@@ -54,9 +54,7 @@ class Pin
         //appear to be consecutive.
 
         $con = 1;
-         if (strlen($pin) == 4) {
-            $consecutiveNums--;
-        }
+
         for ($i = 1; $i < strlen($pin); $i++) {
             if ($pin[$i] == ($pin[$i - 1] + 1)) {
                 $con++;
