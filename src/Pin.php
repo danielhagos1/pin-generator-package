@@ -17,7 +17,7 @@ class Pin
             $this->generate($length);
         }
 
-        if (!PinModel::where('pin', $pin)->count() == 0) {
+        if (PinModel::where('pin', $pin)->count() == 0) {
             PinModel::create(['pin' => $pin]);
         }
 
