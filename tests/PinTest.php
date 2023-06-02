@@ -55,7 +55,7 @@ test('test is pin palindrome', function () {
 
 test('test pin digits repeated', function () {
     $pin   = '1115';
-    $value = Pin::isPinDigitRepeated($pin);
+    $value = Pin::isPinDigitRepeated($pin, 3);
     expect($value)->toBeTrue();
 });
 

@@ -72,12 +72,8 @@ class Pin
     {
         //compare with nested for loop the first for loop start with 0 indexed element
         //the second for loop start with 1 indexed element and iterate through
-        //both loop to check that if any element repeated $sm increment by 1 till the condition of similar of digits >= 4
+        //both loop to check that if any element repeated $sm increment by 1 till the condition of similar digits >= 4
         $sm = 1;
-
-        if (strlen($pin) == 4) {
-            $sameDigit--;
-        }
 
         for ($i = 0; $i < strlen($pin); $i++) {
             for ($j = 1; $j < strlen($pin); $j++) {
