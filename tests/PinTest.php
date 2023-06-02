@@ -44,7 +44,7 @@ test('test valid pin 234953', function () {
 });
 
 test('test valid pin 763315', function () {
-    $pin = Pin::validPin('763315');
+    $pin = Pin::isPinDigitRepeated('763315');
     expect($pin)->toBeTrue();
 });
 
@@ -70,11 +70,5 @@ test('test invalid sequential pin', function () {
     $value = Pin::isSequential($pin);
     expect($value)->toBeTrue();
 });
-
-//test('tes pin is valid', function () {
-//    $pin   = '763315';
-//    $value = Pin::validPin($pin);
-//    expect($value)->toBeTrue();
-//});
 
 

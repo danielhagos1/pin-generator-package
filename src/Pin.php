@@ -4,7 +4,6 @@ declare(strict_types=0);
 
 namespace Intellicore\Pin;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Intellicore\Pin\Models\PinModel;
 
@@ -49,7 +48,7 @@ class Pin
         return strrev($pin) === $pin;
     }
 
-    function isSequential($pin, $consecutiveNums = 4): bool
+    function isSequential($pin, $consecutiveNums = 3): bool
     {
         //compare the prev and next elements of the string array
         //if the difference is only by one $con increment by 1 till the four digits
@@ -69,11 +68,11 @@ class Pin
         return false;
     }
 
-    public function isPinDigitRepeated(string $pin, $sameDigit = 4): bool
+    public function isPinDigitRepeated(string $pin, $sameDigit = 3): bool
     {
         //compare with nested for loop the first for loop start with 0 indexed element
         //the second for loop start with 1 indexed element and iterate through
-        //both loop to check that if any element repeated if so $sm will be increment by 1 till the condition met
+        //both loop to check that if any element repeated $sm increment by 1 till the condition of similar of digits >= 4
         $sm = 1;
 
         for ($i = 0; $i < strlen($pin); $i++) {
